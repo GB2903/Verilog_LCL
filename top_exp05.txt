@@ -1,0 +1,23 @@
+module top_exp05 (
+    input [17:0] SW,      // chaves (entradas T, J, K)
+    input [3:0] KEY,      // KEY[0]=clock manual, KEY[1]=reset
+    output [17:0] LEDR    // leds vermelhos
+);
+    // Flip-Flop T da Atividade 1
+    ff_t_hier ft (
+        .clk (KEY[0]),
+        .rst (KEY[1]),
+        .T (SW[0]),
+        .Q (LEDR[0])
+    );
+
+    // Flip-Flop JK da Atividade 2
+    ff_jk_hier fjk (
+        .clk (KEY[0]),
+        .rst (KEY[1]),
+        .J   (SW[1]),   // liga J, por exemplo, na chave SW[1]
+        .K   (SW[2]),   // liga K, por exemplo, na chave SW[2]
+        .Q   (LEDR[1])  // liga a saída Q em outro LED, ex: LEDR[1]
+    );
+
+endmodule

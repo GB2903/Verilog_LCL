@@ -1,0 +1,13 @@
+module SomadorCompleto (
+    input A,
+    input B,
+    input Cin,
+    output S,
+    output Cout
+);
+
+// Lógica booleana do somador completo de 1 bit
+    assign S = A ^ B ^ Cin;
+    assign Cout = (A & B) | (Cin & (A ^ B));
+
+endmodule
