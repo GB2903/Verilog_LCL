@@ -1,0 +1,18 @@
+module CompDiferente4bits (
+    input [3:0] A,
+    input [3:0] B,
+    output S
+);
+
+    wire d0, d1, d2, d3; 
+
+    // Operação XOR bit a bit (1 se forem diferentes)
+    assign d0 = A[0] ^ B[0]; 
+    assign d1 = A[1] ^ B[1];
+    assign d2 = A[2] ^ B[2];
+    assign d3 = A[3] ^ B[3];
+
+    // Lógica OR: S é 1 se pelo menos um par de bits for diferente
+    assign S = d0 | d1 | d2 | d3; 
+
+endmodule

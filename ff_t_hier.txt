@@ -1,0 +1,17 @@
+module ff_t_hier (
+    input clk, rst, T,
+    output Q,
+    output Qn
+);
+    wire d_int;
+    // IMPLEMENTAR AQUI: d_int em função de T e de Q (Parte 3 do pré-lab)
+    assign d_int = T ^ Q
+
+    ff_d u0 ( 
+        .clk (clk),
+        .rst (rst),
+        .D (d_int),
+        .Q (Q),
+        .Qn (Qn)
+    );
+endmodule

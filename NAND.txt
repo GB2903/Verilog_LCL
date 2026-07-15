@@ -1,0 +1,50 @@
+﻿// Definição das entradas baseadas nas chaves da placa DE2
+wire w_A = SW[2];
+wire w_B = SW[1];
+wire w_C = SW[0];
+
+
+// Fios internos para conexões
+wire w_notA;
+wire w_notB;
+wire w_notC;
+wire w_nandAB;
+
+
+// =================================================================
+// 2. IMPLEMENTAÇÃO DAS PORTAS BÁSICAS (Usando EquivalenteNAND)
+// =================================================================
+
+
+// NOT A -> Mapeado para LEDR[0]
+EquivalenteNAND inst_notA (.A(w_A), .B(w_A), .S(w_notA));
+assign LEDR[0] = w_notA;
+
+
+// AND(A, B) -> Mapeado para LEDR[1]
+EquivalenteNAND inst_nandAB (.A(w_A), .B(w_B), .S(w_nandAB));
+EquivalenteNAND inst_andAB  (.A(w_nandAB), .B(w_nandAB), .S(LEDR[1]));
+
+
+// OR(A, B) -> Mapeado para LEDR[2]
+EquivalenteNAND inst_notB_or (.A(w_B), .B(w_B), .S(w_notB));
+EquivalenteNAND inst_orAB    (.A(w_notA), .B(w_notB), .S(LEDR[2]));
+
+
+// =================================================================
+// 3. EXPRESSÃO DO PRÉ-PROJETO FINAL -> LEDR[3]
+// =================================================================
+wire w_term1, w_term2;
+
+
+EquivalenteNAND inst_notC (.A(w_C), .B(w_C), .S(w_notC));
+
+
+// Termo 1: ~(~A . ~C)
+EquivalenteNAND inst_nand1 (.A(w_notA), .B(w_notC), .S(w_term1));
+// Termo 2: ~(B . ~C)
+EquivalenteNAND inst_nand2 (.A(w_B),    .B(w_notC), .S(w_term2));
+
+
+// Porta final que junta os termos
+EquivalenteNAND inst_final_nand (.A(w_term1), .B(w_term2), .S(LEDR[3]));

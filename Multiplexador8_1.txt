@@ -1,0 +1,15 @@
+module Multiplexador8_1 (
+    input S,            // Habilitação
+    input [7:0] I,      // Entradas de dados
+    input [2:0] Sel,    // Seleção (A, B, C)
+    output Y,           // Saída nominal
+    output W            // Saída invertida
+);
+
+    // Lógica para Y: se S=1, seleciona o canal indexado por Sel. Se S=0, Y=0.
+    assign Y = S ? I[Sel] : 1'b0;
+    
+    // Lógica para W: Inverso de Y
+    assign W = ~Y;
+
+endmodule

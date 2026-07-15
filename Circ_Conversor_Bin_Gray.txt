@@ -1,0 +1,14 @@
+module Circ_Conversor_Bin_Gray (
+    input [3:0] B,   // B3..B0 - Entrada em Binário Puro (4 bits)
+    output [3:0] G  // G3..G0 - Saída em Código Gray equivalente
+);
+
+    // O bit mais significativo (MSB) se mantem igual
+    assign G[3] = B[3];
+    
+    // Cada bit subsequente é o XOR entre o bit atual e o vizinho da esquerda
+    assign G[2] = B[3] ^ B[2];
+    assign G[1] = B[2] ^ B[1];
+    assign G[0] = B[1] ^ B[0];
+
+endmodule

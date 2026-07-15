@@ -1,0 +1,15 @@
+module Circ_Codificador_BCD (
+    input [9:0] X,   // X9..X0 (Entrada decimal totalmente decodificada)
+    output [3:0] Z  // Z3..Z0 (Saída BCD)
+);
+
+    // Implementação das expressões lógicas com prioridade
+    assign Z[3] = X[9] | X[8];
+    
+    assign Z[2] = ~X[9] & ~X[8] & (X[7] | X[6] | X[5] | X[4]);
+    
+    assign Z[1] = ~X[9] & ~X[8] & (X[7] | X[6] | (~X[5] & ~X[4] & (X[3] | X[2])));
+    
+    assign Z[0] = X[9] | (~X[8] & (X[7] | (~X[6] & (X[5] | (~X[4] & (X[3] | (~X[2] & X[1])))))));
+
+endmodule

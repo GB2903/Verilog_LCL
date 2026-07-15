@@ -1,0 +1,10 @@
+module BLU_Mux8_1 (
+    input [2:0] Sel,   // Três variáveis de seleção (A, B, C)
+    input [7:0] I,     // Entradas de dados preenchidas com os resíduos
+    output F           // Saída da função F(A,B,C,D)
+);
+
+    // Implementação direta por indexação de vetor
+    assign F = I[Sel];
+
+endmodule

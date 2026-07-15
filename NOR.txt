@@ -1,0 +1,49 @@
+﻿// Definição das entradas baseadas nas chaves da placa DE2
+wire w_A = SW[2];
+wire w_B = SW[1];
+wire w_C = SW[0];
+
+
+// Fios internos
+wire w_notA;
+wire w_notB;
+wire w_notC;
+wire w_norAB;
+
+
+// =================================================================
+// 2. IMPLEMENTAÇÃO DAS PORTAS BÁSICAS (Usando EquivalenteNOR)
+// =================================================================
+
+
+// NOT A -> LEDR[0]
+EquivalenteNOR inst_notA (.A(w_A), .B(w_A), .S(w_notA));
+assign LEDR[0] = w_notA;
+
+
+// AND(A, B) -> LEDR[1]
+EquivalenteNOR inst_notB (.A(w_B), .B(w_B), .S(w_notB));
+EquivalenteNOR inst_andAB (.A(w_notA), .B(w_notB), .S(LEDR[1]));
+
+
+// OR(A, B) -> LEDR[2]
+EquivalenteNOR inst_norAB (.A(w_A), .B(w_B), .S(w_norAB));
+EquivalenteNOR inst_orAB  (.A(w_norAB), .B(w_norAB), .S(LEDR[2]));
+
+
+// =================================================================
+// 3. EXPRESSÃO DO PRÉ-PROJETO FINAL -> LEDR[3]
+// =================================================================
+wire w_nor_int;
+
+
+// 1. Inversor para obter ~C
+EquivalenteNOR inst_notC (.A(w_C), .B(w_C), .S(w_notC));
+
+
+// 2. Faz a operação NOR entre ~A e B
+EquivalenteNOR inst_nor_bloco1 (.A(w_notA), .B(w_B), .S(w_nor_int));
+
+
+// 3. NOR final entre o bloco anterior e C
+EquivalenteNOR inst_nor_final (.A(w_nor_int), .B(w_C), .S(LEDR[3]));

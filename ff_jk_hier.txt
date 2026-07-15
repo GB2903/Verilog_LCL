@@ -1,0 +1,16 @@
+module ff_jk_hier (
+    input clk, rst, J, K,
+    output Q,
+    output Qn
+);
+    wire d_int;
+    assign d_int = (J & ~Q) | (~K & Q);
+
+    ff_d u0 (
+        .clk (clk),
+        .rst (rst),
+        .D (d_int),
+        .Q (Q),
+        .Qn (Qn)
+    );
+endmodule

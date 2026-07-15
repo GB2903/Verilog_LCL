@@ -1,0 +1,15 @@
+module Demultiplexador1_4 (
+    input E,
+    input [1:0] Sel,
+    output reg [3:0] S  // Declarado como reg pois será usado dentro do always
+);
+
+    always @(*) begin
+        // Padrão: todas as saídas em 0
+        S = 4'b0000; //garante que todas as saídas tenham um valor conhecido
+        
+        // Atribui E apenas à saída selecionada
+        S[Sel] = E; //faz o roteamento sem precisar escrever um bloco case inteiro.
+    end
+
+endmodule
